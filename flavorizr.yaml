@@ -1,0 +1,27 @@
+flavors:
+  dev:
+    app:
+      name: "模板Dev"  # 开发环境的应用名称
+    android:
+      applicationId: "dev.zhangsp.flutter_template_getx.dev"  # 开发环境的包名
+    ios:
+      bundleId: "dev.zhangsp.flutter_template_getx.dev"  # 开发环境的 Bundle ID
+    # assets:
+    #   - assets/images/dev_logo.png  # 开发环境的资源文件
+    # androidFirebase:
+    #   googleServicesFile: "dev/google-services.json"  # 开发环境的 Firebase 配置文件
+    # iosFirebase:
+    #   googleServicesFile: "dev/GoogleService-Info.plist"  # 开发环境的 Firebase 配置文件
+  prod:
+    app:
+      name: "模板"  # 生产环境的应用名称
+    android:
+      applicationId: "dev.zhangsp.flutter_template_getx"  # 生产环境的包名
+    ios:
+      bundleId: "dev.zhangsp.flutter_template_getx"  # 生产环境的 Bundle ID
+  #  assets:
+  #    - assets/images/prod_logo.png  # 生产环境的资源文件
+  #  androidFirebase:
+  #     googleServicesFile: "prod/google-services.json"  # 生产环境的 Firebase 配置文件
+  #  iosFirebase:
+  #    googleServicesFile: "prod/GoogleService-Info.plist"  # 生产环境的 Firebase 配置文件
