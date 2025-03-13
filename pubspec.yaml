@@ -10,9 +10,9 @@ dependencies:
   cupertino_icons: ^1.0.6
   get: 4.7.2
   flutter_screenutil: ^5.9.3  #屏幕适配
-  flutter_styled_toast: ^2.2.1    #全局消息弹窗
   logger: ^2.3.0              #日志管理
   flutter_flavorizr: ^2.2.3   #环境管理
+  mmkv: ^2.1.0                #本地存储
   
   flutter: 
     sdk: flutter

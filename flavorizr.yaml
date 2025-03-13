@@ -1,11 +1,19 @@
+# 定义维度：环境（env）
+flavorDimensions: "env"
+
 flavors:
   dev:
+    dimension: "env"  # 必须指定维度
     app:
       name: "模板Dev"  # 开发环境的应用名称
     android:
-      applicationId: "dev.zhangsp.flutter_template_getx.dev"  # 开发环境的包名
+      applicationId: "dev.zhangsp.flutterTemplateGetx.dev"  # 开发环境的包名
     ios:
-      bundleId: "dev.zhangsp.flutter_template_getx.dev"  # 开发环境的 Bundle ID
+      bundleId: "dev.zhangsp.flutterTemplateGetx.dev"  # 开发环境的 Bundle ID
+    # 开发专属配置
+    values:
+      apiBaseUrl: "https://dev.api.com"
+      enableLogging: true
     # assets:
     #   - assets/images/dev_logo.png  # 开发环境的资源文件
     # androidFirebase:
@@ -13,12 +21,17 @@ flavors:
     # iosFirebase:
     #   googleServicesFile: "dev/GoogleService-Info.plist"  # 开发环境的 Firebase 配置文件
   prod:
+    dimension: "env"
     app:
-      name: "模板"  # 生产环境的应用名称
+      name: "模板Prod"  # 生产环境的应用名称
     android:
-      applicationId: "dev.zhangsp.flutter_template_getx"  # 生产环境的包名
+      applicationId: "dev.zhangsp.flutterTemplateGetx.prod"  # 生产环境的包名
     ios:
-      bundleId: "dev.zhangsp.flutter_template_getx"  # 生产环境的 Bundle ID
+      bundleId: "dev.zhangsp.flutterTemplateGetx.prod"  # 生产环境的 Bundle ID
+     # 发布专属配置
+    values:
+      apiBaseUrl: "https://prod.api.com"
+      enableLogging: false
   #  assets:
   #    - assets/images/prod_logo.png  # 生产环境的资源文件
   #  androidFirebase:
