@@ -4,11 +4,12 @@ import 'package:mmkv/mmkv.dart';
 import 'app.dart';
 
 FutureOr<void> main() async {
-  initSetting();
+  WidgetsFlutterBinding.ensureInitialized();
+  await initSetting();
   runApp(const App());
 }
 
-void initSetting() async{
+Future<void> initSetting() async {
   final rootDir = await MMKV.initialize();
   print('MMKV for flutter with rootDir = $rootDir');
 }

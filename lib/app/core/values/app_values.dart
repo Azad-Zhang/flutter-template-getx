@@ -15,7 +15,6 @@ abstract class AppValues {
   static const int loggerMethodCount = 2;
   //logger配置 结束
 
-
   static const double margin = 16;
   static const double margin_zero = 0;
   static const double smallMargin = 8;
@@ -31,7 +30,6 @@ abstract class AppValues {
   static const double margin_10 = 10;
   static const double margin_30 = 30;
   static const double margin_20 = 20;
-
 
   //基础配置
   static const double smallRadius = 8;

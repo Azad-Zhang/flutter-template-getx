@@ -23,28 +23,27 @@ class HomeView extends GetView<HomeController> {
         centerTitle: true,
       ),
       body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('当前运行环境: ${F.name}'),
-              Text('API 地址: ${F.apiBaseUrl}'),
-              Text('是否开启日志: ${F.enableLogging}'),
-              InkWell(
-                onTap: (){
-                  
-                },
-                child: Container(
-                  width:200,
-                  height: 60,
-                  color: Colors.red,
-                  child: Text(
-                    "设置内存字符串123"
-                  ),
-                ),
-              )
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('当前运行环境: ${F.name}'),
+            Text('API 地址: ${F.apiBaseUrl}'),
+            Text('是否开启日志: ${F.enableLogging}'),
+            Obx(() => Text("内存字符串${controller.storageString.value}")),
+            InkWell(
+              onTap: () {
+                controller.testStorage();
+              },
+              child: Container(
+                width: 200,
+                height: 60,
+                color: Colors.red,
+                child: Text("设置内存字符串123"),
+              ),
+            )
+          ],
         ),
+      ),
     );
   }
 }
