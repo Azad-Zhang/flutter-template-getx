@@ -4,7 +4,7 @@
  * @LastEditors: 张仕鹏 1120148291@qq.com
  * @LastEditTime: 2025-03-13 16:25:55
  * @FilePath: /flutter-template-getx/lib/app/core/base/view/base_view.dart
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: 基础视图类，提供统一的页面布局和状态管理
  */
 import 'dart:ui';
 
@@ -18,76 +18,88 @@ import 'package:flutter_template_getx/app/core/widgets/elevated_container.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
+/// 基础视图类
+/// 提供统一的页面布局和状态管理
+/// 包括：加载状态、错误提示、成功提示、默认消息等
 abstract class BaseView<Controller extends BaseController>
     extends GetView<Controller> {
+  /// 背景颜色
   final Color bgColor;
 
   BaseView({
     super.key,
-    required this.bgColor,
+    this.bgColor = Colors.white,
   });
 
+  /// 页面主体内容
   Widget body(BuildContext context);
 
+  /// 页面顶部导航栏
   PreferredSizeWidget? appBar(BuildContext context);
 
-    @override
+  @override
   Widget build(BuildContext context) {
-    // return GestureDetector(
-    // behavior: HitTestBehavior.translucent,
-    // child:
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        // annotatedRegion(context),
-        // pageScaffold(context),
-        Obx(() => controller.pageState == PageState.LOADING
-            ? shadowBox()
-            : Container()),
-        Obx(() => controller.pageState == PageState.LOADING
-            ? _showLoading(controller.loadingMessage)
-            : Container()),
-
-        // Obx(() => controller.errorMessage.isNotEmpty
-        //     ? showErrorSnackBar(controller.errorMessage)
-        //     : Container()),
-        // 其他组件
-        // if (banner != null) banner!, // 检查 banner 是否为 null，然后添加到 children 列表中
-      ],
+    return Scaffold(
+      backgroundColor: bgColor,
+      appBar: appBar(context),
+      body: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          // 主体内容
+          body(context),
+          
+          // 加载状态遮罩
+          Obx(() => controller.pageState == PageState.LOADING
+              ? shadowBox()
+              : Container()),
+          
+          // 加载提示
+          Obx(() => controller.pageState == PageState.LOADING
+              ? _showLoading(controller.loadingMessage)
+              : Container()),
+        ],
+      ),
     );
-    // )
   }
 
-
-  Widget _showLoading(String value) {
+  /// 显示加载提示
+  Widget _showLoading(String message) {
     return Center(
       child: ElevatedContainer(
-          padding: EdgeInsets.all(AppValues.margin),
-          decoration: BoxDecoration(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircularProgressIndicator(
-                color: AppColors.colorPrimary,
-              ),
+        padding: EdgeInsets.all(AppValues.margin),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(AppValues.smallRadius),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CircularProgressIndicator(
+              color: AppColors.colorPrimary,
+            ),
+            if (message.isNotEmpty)
               Container(
-                // margin: EdgeInsets.only(top: ScreenAdapter.height(8)),
+                margin: EdgeInsets.only(top: AppValues.margin),
                 child: Text(
-                // myText,
-                "nihao1",
-                // style: normalF16H22C666,
+                  message,
+                  style: TextStyle(
+                    color: AppColors.colorPrimary,
+                    fontSize: 14,
+                  ),
+                ),
               ),
-              )
-            ],
-          )),
+          ],
+        ),
+      ),
     );
   }
 
+  /// 加载遮罩层
   Widget shadowBox() {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      color: Colors.black.withOpacity(0.3), // 半透明的阴影色
+      color: Colors.black.withAlpha(77),
     );
   }
 }

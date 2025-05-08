@@ -14,9 +14,18 @@ import 'package:mmkv/mmkv.dart';
 
 class HomeController extends BaseController {
   RxString storageString = "".obs;
+  
   @override
   void onInit() {
     super.onInit();
+    _loadStoredValue();
+  }
+
+  void _loadStoredValue() async {
+    final result = await storage.getString(AppValues.testValue);
+    if (result != null) {
+      storageString.value = result;
+    }
   }
 
   @override

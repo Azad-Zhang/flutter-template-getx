@@ -10,153 +10,143 @@ import 'package:flutter_template_getx/app/network/exceptions/timeout_exception.d
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:logger/logger.dart';
+import 'dart:async';
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:cherry_toast/resources/arrays.dart';
+import 'package:flutter/material.dart';
 
 import '../../../network/exceptions/service_unavailable_exception.dart';
 import '../../../network/exceptions/unauthorize_exception.dart';
 
 /**
- * 封装基础控制器
- * 1、日志
- * 2、国际化
- * 3、刷新页面
- * 4、页面状态管理
- * 5、加载提示
- * 6、显示消息框
+ * 基础控制器
+ * 
+ * 功能特性：
+ * 1. 日志管理 - 统一的日志记录
+ * 2. 国际化支持 - 多语言支持
+ * 3. 页面刷新 - 页面数据刷新控制
+ * 4. 状态管理 - 页面状态统一管理
+ * 5. 加载提示 - 统一的加载状态展示
+ * 6. 消息提示 - 统一的提示框管理
  */
 abstract class BaseController extends GetxController {
+  // =============== 基础服务 ===============
+  /// 安全存储服务实例
   final storage = SecureStorageService.instance;
 
-  // 获取 logger 单例
+  /// 日志服务实例
   final Logger logger = LoggerSingleton.getInstance();
 
-  // AppLocalizations get appLocalization => AppLocalizations.of(Get.context!)!;
-
-  // 页面状态控制
+  // =============== 页面状态管理 ===============
+  /// 页面状态控制器
   final Rx<PageState> _pageStateController = PageState.DEFAULT.obs;
-  //向外界抛出
+  /// 对外暴露的页面状态
   PageState get pageState => _pageStateController.value;
 
-  final Rx<String> _loadingMessage = ''.obs;
-  String get loadingMessage => _loadingMessage.value;
+  /// 临时状态控制器
+  final Rx<PageState?> _tempStateController = Rx<PageState?>(null);
+  /// 对外暴露的临时状态
+  PageState? get tempState => _tempStateController.value;
 
-  //Reload the page
+  /// 页面刷新控制器
   final RxBool _refreshController = false.obs;
+  /// 触发页面刷新
   refreshPage(bool refresh) => _refreshController(refresh);
 
-  // 重置页面状态
+  // =============== 加载状态管理 ===============
+  /// 加载提示信息控制器
+  final Rx<String> _loadingMessage = ''.obs;
+  /// 获取当前加载提示信息
+  String get loadingMessage => _loadingMessage.value;
+
+  // =============== 消息提示管理 ===============
+  /// 显示消息
+  void showMessage(String message) {
+    _tempStateController.value = PageState.MESSAGE;
+    CherryToast.info(
+      title: Text(message),
+      animationType: AnimationType.fromTop,
+      animationDuration: Duration(milliseconds: 300),
+      autoDismiss: true,
+      enableIconAnimation: true,
+    ).show(Get.context!);
+    Future.delayed(Duration(milliseconds: 300), () {
+      _tempStateController.value = null;
+    });
+  }
+
+  /// 显示成功消息
+  void showSuccessMessage(String message) {
+    _tempStateController.value = PageState.MESSAGE;
+    CherryToast.success(
+      title: Text(message),
+      animationType: AnimationType.fromTop,
+      animationDuration: Duration(milliseconds: 300),
+      autoDismiss: true,
+      enableIconAnimation: true,
+    ).show(Get.context!);
+    Future.delayed(Duration(milliseconds: 300), () {
+      _tempStateController.value = null;
+    });
+  }
+
+  /// 显示错误消息
+  void showErrorMessage(String message) {
+    _tempStateController.value = PageState.MESSAGE;
+    CherryToast.error(
+      title: Text(message),
+      animationType: AnimationType.fromTop,
+      animationDuration: Duration(milliseconds: 300),
+      autoDismiss: true,
+      enableIconAnimation: true,
+    ).show(Get.context!);
+    Future.delayed(Duration(milliseconds: 300), () {
+      _tempStateController.value = null;
+    });
+  }
+
+  /// 显示警告消息
+  void showWarningMessage(String message) {
+    _tempStateController.value = PageState.MESSAGE;
+    CherryToast.warning(
+      title: Text(message),
+      animationType: AnimationType.fromTop,
+      animationDuration: Duration(milliseconds: 300),
+      autoDismiss: true,
+      enableIconAnimation: true,
+    ).show(Get.context!);
+    Future.delayed(Duration(milliseconds: 300), () {
+      _tempStateController.value = null;
+    });
+  }
+
+  // =============== 页面状态操作方法 ===============
+  /// 重置页面状态为默认状态
   void resetPageState() => _pageStateController(PageState.DEFAULT);
-  //更新页面状态
+
+  /// 更新页面状态
   void updatePageState(PageState state) => _pageStateController(state);
 
-  // 显示加载状态
+  // =============== 加载状态操作方法 ===============
+  /// 显示加载状态
+  /// [message] 可选的加载提示信息
   showLoading([String? message]) {
-    updatePageState(PageState.LOADING);
+    _tempStateController.value = PageState.LOADING;
     _loadingMessage.value = message ?? '';
   }
 
-  // 隐藏加载状态
+  /// 隐藏加载状态
   hideLoading() {
-    resetPageState();
+    _tempStateController.value = null;
     _loadingMessage.value = '';
   }
 
-  //显示默认弹窗信息
-  final _messageController = ''.obs;
-  String get message => _messageController.value;
-  showMessage(String msg) {
-    updatePageState(PageState.MESSAGE);
-    _messageController(msg);
-  }
-
-  //显示失败弹窗信息
-  final _errorMessageController = ''.obs;
-  String get errorMessage => _errorMessageController.value;
-  showErrorMessage(String msg) {
-    updatePageState(PageState.MESSAGE);
-    _errorMessageController("");
-    _errorMessageController(msg);
-  }
-
-  //显示成功弹窗信息
-  final _successMessageController = ''.obs;
-  String get successMessage => _successMessageController.value;
-  showSuccessMessage(String msg) {
-    updatePageState(PageState.MESSAGE);
-    _successMessageController(msg);
-  }
-
-  // 消息显示完成后重置页面状态
-  void resetMessageState() {
-    resetPageState();
-    _messageController.value = '';
-    _errorMessageController.value = '';
-    _successMessageController.value = '';
-  }
-
-  /**
-   * @description: A universal data service calling function callDataService，
-   * It accepts an asynchronous operation future，
-   * And provides some callback functions to handle success, failure, and completion events。
-   * @return dynamic
-   */
-  dynamic callDataService<T>(
-    Future<T> future, {
-    Function(Exception exception)? onError,
-    Function(T response)? onSuccess,
-    Function? onStart,
-    Function? onComplete,
-  }) async {
-    Exception? _exception;
-
-    onStart == null ? showLoading() : onStart();
-
-    try {
-      final T response = await future;
-
-      if (onSuccess != null) onSuccess(response);
-
-      onComplete == null ? hideLoading() : onComplete();
-
-      return response;
-    } // 按照不同的异常类型进行捕获和处理
-    on ServiceUnavailableException catch (exception) {
-      _exception = exception;
-      showErrorMessage(exception.message);
-    } on UnauthorizedException catch (exception) {
-      _exception = exception;
-      showErrorMessage(exception.message);
-    } on TimeoutException catch (exception) {
-      _exception = exception;
-      showErrorMessage(exception.message ?? 'Timeout exception');
-    } on NetworkException catch (exception) {
-      _exception = exception;
-      showErrorMessage(exception.message);
-    } on JsonFormatException catch (exception) {
-      _exception = exception;
-      showErrorMessage(exception.message);
-    } on NotFoundException catch (exception) {
-      _exception = exception;
-      showErrorMessage(exception.message);
-    } on ApiException catch (exception) {
-      _exception = exception;
-    } on AppException catch (exception) {
-      _exception = exception;
-      showErrorMessage(exception.message);
-    } catch (error) {
-      _exception = AppException(message: "$error");
-      logger.e("Controller>>>>>> error $error");
-    }
-    if (onError != null) onError(_exception);
-    onComplete == null ? hideLoading() : onComplete();
-  }
-
+  // =============== 生命周期方法 ===============
   @override
   void onClose() {
     _loadingMessage.close();
     _pageStateController.close();
-    _messageController.close();
-    _errorMessageController.close();
-    _successMessageController.close();
+    _tempStateController.close();
     super.onClose();
   }
 }

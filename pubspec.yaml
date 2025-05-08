@@ -16,6 +16,7 @@ dependencies:
   
   flutter: 
     sdk: flutter
+  cherry_toast: ^1.12.0       #消息提示
 
 dev_dependencies: 
   flutter_lints: 4.0.0
