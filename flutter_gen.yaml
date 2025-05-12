@@ -1,0 +1,11 @@
+flutter_gen:
+  output: lib/gen/  # 生成文件输出目录
+  line_length: 80   # 每行最大长度
+  
+  # 配置资源类型
+  assets:
+    enabled: true
+  fonts:
+    enabled: true
+  colors:
+    enabled: true 

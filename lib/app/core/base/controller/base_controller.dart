@@ -62,7 +62,10 @@ abstract class BaseController extends GetxController {
   // =============== 消息提示管理 ===============
   /// 显示消息
   void showMessage(String message) {
-    _tempStateController.value = PageState.MESSAGE;
+    // 保存当前状态
+    _tempStateController.value = _pageStateController.value;
+    // 设置消息状态
+    _pageStateController.value = PageState.MESSAGE;
     CherryToast.info(
       title: Text(message),
       animationType: AnimationType.fromTop,
@@ -71,13 +74,18 @@ abstract class BaseController extends GetxController {
       enableIconAnimation: true,
     ).show(Get.context!);
     Future.delayed(Duration(milliseconds: 300), () {
+      // 恢复之前的状态
+      _pageStateController.value = _tempStateController.value ?? PageState.DEFAULT;
       _tempStateController.value = null;
     });
   }
 
   /// 显示成功消息
   void showSuccessMessage(String message) {
-    _tempStateController.value = PageState.MESSAGE;
+    // 保存当前状态
+    _tempStateController.value = _pageStateController.value;
+    // 设置消息状态
+    _pageStateController.value = PageState.MESSAGE;
     CherryToast.success(
       title: Text(message),
       animationType: AnimationType.fromTop,
@@ -86,13 +94,18 @@ abstract class BaseController extends GetxController {
       enableIconAnimation: true,
     ).show(Get.context!);
     Future.delayed(Duration(milliseconds: 300), () {
+      // 恢复之前的状态
+      _pageStateController.value = _tempStateController.value ?? PageState.DEFAULT;
       _tempStateController.value = null;
     });
   }
 
   /// 显示错误消息
   void showErrorMessage(String message) {
-    _tempStateController.value = PageState.MESSAGE;
+    // 保存当前状态
+    _tempStateController.value = _pageStateController.value;
+    // 设置消息状态
+    _pageStateController.value = PageState.MESSAGE;
     CherryToast.error(
       title: Text(message),
       animationType: AnimationType.fromTop,
@@ -101,13 +114,18 @@ abstract class BaseController extends GetxController {
       enableIconAnimation: true,
     ).show(Get.context!);
     Future.delayed(Duration(milliseconds: 300), () {
+      // 恢复之前的状态
+      _pageStateController.value = _tempStateController.value ?? PageState.DEFAULT;
       _tempStateController.value = null;
     });
   }
 
   /// 显示警告消息
   void showWarningMessage(String message) {
-    _tempStateController.value = PageState.MESSAGE;
+    // 保存当前状态
+    _tempStateController.value = _pageStateController.value;
+    // 设置消息状态
+    _pageStateController.value = PageState.MESSAGE;
     CherryToast.warning(
       title: Text(message),
       animationType: AnimationType.fromTop,
@@ -116,6 +134,8 @@ abstract class BaseController extends GetxController {
       enableIconAnimation: true,
     ).show(Get.context!);
     Future.delayed(Duration(milliseconds: 300), () {
+      // 恢复之前的状态
+      _pageStateController.value = _tempStateController.value ?? PageState.DEFAULT;
       _tempStateController.value = null;
     });
   }
@@ -131,12 +151,18 @@ abstract class BaseController extends GetxController {
   /// 显示加载状态
   /// [message] 可选的加载提示信息
   showLoading([String? message]) {
-    _tempStateController.value = PageState.LOADING;
+    // 保存当前状态到临时状态
+    _tempStateController.value = _pageStateController.value;
+    // 设置loading状态
+    _pageStateController.value = PageState.LOADING;
+    logger.d('showLoading: ${_pageStateController.value}');
     _loadingMessage.value = message ?? '';
   }
 
   /// 隐藏加载状态
   hideLoading() {
+    // 恢复到之前保存的状态
+    _pageStateController.value = _tempStateController.value ?? PageState.DEFAULT;
     _tempStateController.value = null;
     _loadingMessage.value = '';
   }

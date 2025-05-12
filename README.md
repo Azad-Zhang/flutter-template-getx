@@ -32,3 +32,7 @@ flutter run -d d33ac056f4719248c9bdc4f084761b72df3ddf6e -t lib/main_dev.dart
 flutter run -d 2211133c -t lib/main_dev.dart
 
 flutter run --flavor dev -t lib/main_dev.dart -d 2211133c
+
+npx git-cz
+
+flutter pub run build_runner build

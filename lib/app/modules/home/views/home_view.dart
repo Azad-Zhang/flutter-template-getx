@@ -8,168 +8,207 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_template_getx/app/core/base/view/base_view.dart';
-import 'package:flutter_template_getx/app/core/values/app_colors.dart';
+import 'package:flutter_template_getx/app/core/base/widget/custom_appbar.dart';
+import 'package:flutter_template_getx/app/core/utils/screen_adapter.dart';
 import 'package:flutter_template_getx/app/core/values/app_values.dart';
 import 'package:flutter_template_getx/app/modules/home/controllers/home_controller.dart';
 import 'package:get/get.dart';
+import 'package:flutter_template_getx/gen/assets.gen.dart';
+import 'package:flutter_template_getx/app/core/theme/theme_controller.dart';
 
 import '../../../../flavors.dart';
-import '../controllers/home_controller.dart';
 import '../../../core/translations/translation_keys.dart';
-import '../../../core/controllers/language_controller.dart';
 
 class HomeView extends BaseView<HomeController> {
-  HomeView({Key? key}) : super(key: key);
+  HomeView({super.key})
+      : super(
+          bgColor: Color(0xFFFAFAFA),
+          bgImage: PageBackground(
+            imagePath: Assets.images.backBlueBlur.path,
+            width: ScreenAdapter.width(375), // 宽度375
+            height: ScreenAdapter.height(320), // 高度320
+            fit: BoxFit.fitHeight, // 填充方式
+            left: 0,
+            // top: -MediaQuery.of(Get.context!).padding.top,
+            top: 0,
+          ),
+        );
 
   @override
-  Widget body(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // 原有信息显示
-          Text('${T.currentEnvironment.tr}: ${F.name}'),
-          Text('${T.apiAddress.tr}: ${F.apiBaseUrl}'),
-          Text('${T.enableLogging.tr}: ${F.enableLogging}'),
-          Obx(() => Text("${T.memoryString.tr}${controller.storageString.value}")),
-          InkWell(
-            onTap: () {
-              controller.testStorage();
-            },
-            child: Container(
-              width: 200,
-              height: 60,
-              color: Colors.red,
-              child: Center(
-                child: Text(
-                  T.setMemoryString.tr,
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-          ),
-          
-          SizedBox(height: AppValues.margin_40),
-          
-          // 消息测试按钮
-          Text(
-            '消息测试',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: AppValues.margin),
-          
-          // 普通消息按钮
-          InkWell(
-            onTap: () => controller.showMessage('这是一条普通消息'),
-            child: Container(
-              padding: EdgeInsets.all(AppValues.margin),
-              decoration: BoxDecoration(
-                color: Colors.black.withAlpha(230),
-                borderRadius: BorderRadius.circular(AppValues.smallRadius),
-              ),
-              child: Text(
-                '显示普通消息',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: AppValues.margin),
-
-          // 成功消息按钮
-          InkWell(
-            onTap: () => controller.showSuccessMessage('操作成功！'),
-            child: Container(
-              padding: EdgeInsets.all(AppValues.margin),
-              decoration: BoxDecoration(
-                color: Colors.green.withAlpha(230),
-                borderRadius: BorderRadius.circular(AppValues.smallRadius),
-              ),
-              child: Text(
-                '显示成功消息',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: AppValues.margin),
-
-          // 错误消息按钮
-          InkWell(
-            onTap: () => controller.showErrorMessage('操作失败！'),
-            child: Container(
-              padding: EdgeInsets.all(AppValues.margin),
-              decoration: BoxDecoration(
-                color: Colors.red.withAlpha(230),
-                borderRadius: BorderRadius.circular(AppValues.smallRadius),
-              ),
-              child: Text(
-                '显示错误消息',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: AppValues.margin_40),
-
-          // 加载状态测试按钮
-          Text(
-            '加载状态测试',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: AppValues.margin),
-          InkWell(
-            onTap: () {
-              controller.showLoading("正在加载...");
-              Future.delayed(Duration(seconds: 2), () {
-                controller.hideLoading();
-              });
-            },
-            child: Container(
-              padding: EdgeInsets.all(AppValues.margin),
-              decoration: BoxDecoration(
-                color: Colors.blue.withAlpha(230),
-                borderRadius: BorderRadius.circular(AppValues.smallRadius),
-              ),
-              child: Text(
-                '显示加载状态',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+  PreferredSizeWidget? appBar(BuildContext context) {
+    return CustomAppBar(
+      title: Text(T.home.tr, style: TextStyle(color: Colors.black)),
+      backgroundColor: Colors.transparent,
+      centerTitle: true,
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
     );
   }
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) {
-    final languageController = Get.find<LanguageController>();
-    
-    return AppBar(
-      title: Text(T.home.tr),
-      centerTitle: true,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.language),
-          onPressed: () => languageController.toggleLanguage(),
+  Widget body(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
+
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // 主题切换按钮
+            Obx(() => Switch(
+                  value: themeController.isDarkMode,
+                  onChanged: (value) => themeController.toggleTheme(),
+                  activeColor: Colors.blue,
+                )),
+            Text(
+              '切换主题',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: AppValues.margin_40),
+
+            // 显示图片
+            Image.asset(
+              Assets.images.flower.path,
+              width: 200,
+              height: 200,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(height: AppValues.margin_40),
+
+            // 原有信息显示
+            Text('${T.currentEnvironment.tr}: ${F.name}'),
+            Text('${T.apiAddress.tr}: ${F.apiBaseUrl}'),
+            Text('${T.enableLogging.tr}: ${F.enableLogging}'),
+            Obx(() =>
+                Text("${T.memoryString.tr}${controller.storageString.value}")),
+            InkWell(
+              onTap: () {
+                controller.testStorage();
+              },
+              child: Container(
+                width: 200,
+                height: 60,
+                color: Colors.red,
+                child: Center(
+                  child: Text(
+                    T.setMemoryString.tr,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+
+            SizedBox(height: AppValues.margin_40),
+
+            // 消息测试按钮
+            Text(
+              '消息测试',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: AppValues.margin),
+
+            // 普通消息按钮
+            InkWell(
+              onTap: () => controller.showMessage('这是一条普通消息'),
+              child: Container(
+                padding: EdgeInsets.all(AppValues.margin),
+                decoration: BoxDecoration(
+                  color: Colors.black.withAlpha(230),
+                  borderRadius: BorderRadius.circular(AppValues.smallRadius),
+                ),
+                child: Text(
+                  '显示普通消息',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: AppValues.margin),
+
+            // 成功消息按钮
+            InkWell(
+              onTap: () => controller.showSuccessMessage('操作成功！'),
+              child: Container(
+                padding: EdgeInsets.all(AppValues.margin),
+                decoration: BoxDecoration(
+                  color: Colors.green.withAlpha(230),
+                  borderRadius: BorderRadius.circular(AppValues.smallRadius),
+                ),
+                child: Text(
+                  '显示成功消息',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: AppValues.margin),
+
+            // 错误消息按钮
+            InkWell(
+              onTap: () => controller.showErrorMessage('操作失败！'),
+              child: Container(
+                padding: EdgeInsets.all(AppValues.margin),
+                decoration: BoxDecoration(
+                  color: Colors.red.withAlpha(230),
+                  borderRadius: BorderRadius.circular(AppValues.smallRadius),
+                ),
+                child: Text(
+                  '显示错误消息',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: AppValues.margin_40),
+
+            // 加载状态测试按钮
+            Text(
+              '加载状态测试',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: AppValues.margin),
+            InkWell(
+              onTap: () {
+                controller.showLoading("正在加载...");
+                Future.delayed(Duration(seconds: 3), () {
+                  controller.hideLoading();
+                });
+              },
+              child: Container(
+                padding: EdgeInsets.all(AppValues.margin),
+                decoration: BoxDecoration(
+                  color: Colors.blue.withAlpha(230),
+                  borderRadius: BorderRadius.circular(AppValues.smallRadius),
+                ),
+                child: Text(
+                  '显示加载状态',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
+  
   }
 }

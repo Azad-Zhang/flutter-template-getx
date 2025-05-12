@@ -17,8 +17,8 @@ abstract class AppColors {
 
 
   //默认背景颜色
-  static const Color pageBackground = Color(0xFFFFFFFF);
-  static Color elevatedContainerColorOpacity = Colors.grey.withOpacity(0.5);
+  static const Color pageBackground = Color(0xFFFAFAFA);
+  static Color elevatedContainerColorOpacity = Colors.grey.withAlpha(128);
 
 
 }

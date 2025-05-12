@@ -10,13 +10,46 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_template_getx/app/core/base/controller/base_controller.dart';
 import 'package:flutter_template_getx/app/core/model/page_state.dart';
+import 'package:flutter_template_getx/app/core/utils/screen_adapter.dart';
 import 'package:flutter_template_getx/app/core/values/app_colors.dart';
 import 'package:flutter_template_getx/app/core/values/app_values.dart';
 import 'package:flutter_template_getx/app/core/widgets/elevated_container.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+
+/// 页面背景配置类
+class PageBackground {
+  /// 背景图片路径
+  final String imagePath;
+
+  /// 背景图片位置
+  final Alignment alignment;
+
+  /// 背景图片宽度
+  final double width;
+
+  /// 背景图片高度
+  final double height;
+
+  final BoxFit fit;
+
+  final double top;
+
+  final double left;
+
+  const PageBackground({
+    required this.imagePath,
+    this.alignment = Alignment.center,
+    this.width = 100,
+    this.height = 100,
+    this.top = 0,
+    this.left = 0,
+    this.fit = BoxFit.cover,
+  });
+}
 
 /// 基础视图类
 /// 提供统一的页面布局和状态管理
@@ -26,9 +59,13 @@ abstract class BaseView<Controller extends BaseController>
   /// 背景颜色
   final Color bgColor;
 
+  /// 页面背景配置
+  final PageBackground? bgImage;
+
   BaseView({
     super.key,
     this.bgColor = Colors.white,
+    this.bgImage,
   });
 
   /// 页面主体内容
@@ -41,18 +78,49 @@ abstract class BaseView<Controller extends BaseController>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
-      appBar: appBar(context),
+      extendBodyBehindAppBar: true,
+      appBar: appBar(context) != null
+          ? PreferredSize(
+              preferredSize: const Size.fromHeight(kToolbarHeight),
+              child: Container(
+                color: Colors.transparent,
+                child: appBar(context),
+              ),
+            )
+          : null,
       body: Stack(
         clipBehavior: Clip.none,
         children: [
+          // 背景图片
+          if (bgImage != null)
+            Positioned(
+                top: bgImage!.top,
+                left: bgImage!.left,
+                  child: Container(
+                    
+                    width: bgImage!.width,
+                  height: bgImage!.height,
+                    decoration: BoxDecoration(
+                      // color: Colors.red,
+                      image: DecorationImage(
+                          image: AssetImage(bgImage!.imagePath),
+                          fit: bgImage!.fit),
+                    ),
+                  
+                )),
+
           // 主体内容
-          body(context),
-          
+          bgImage != null ? Container(
+            margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top + kToolbarHeight) ,
+            child: body(context),
+          ) : body(context),
+          // body(context),
+
           // 加载状态遮罩
           Obx(() => controller.pageState == PageState.LOADING
               ? shadowBox()
               : Container()),
-          
+
           // 加载提示
           Obx(() => controller.pageState == PageState.LOADING
               ? _showLoading(controller.loadingMessage)
