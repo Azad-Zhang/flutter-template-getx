@@ -10,43 +10,54 @@ import 'package:flutter_template_getx/app/core/values/app_values.dart';
 import 'package:flutter_template_getx/flavors.dart';
 import 'package:logger/logger.dart';
 
-
+/// 日志单例类
+/// 
+/// 使用单例模式实现的日志管理器
+/// 根据不同的应用环境（开发/生产）配置不同的日志级别
+/// 提供统一的日志打印接口
 class LoggerSingleton {
-  // 静态私有实例
+  /// 静态私有实例
+  /// 
+  /// 用于存储全局唯一的Logger实例
   static Logger? _instance;
 
-  // 私有构造函数
+  /// 私有构造函数
+  /// 
+  /// 防止外部直接创建实例
   LoggerSingleton._();
 
-  // 静态公共访问方法
+  /// 获取Logger实例
+  /// 
+  /// 如果实例不存在，则根据当前环境创建新的实例
+  /// 开发环境使用debug级别，生产环境使用warning级别
+  /// 
+  /// 返回配置好的Logger实例
   static Logger getInstance() {
     if (_instance == null) {
+      /// 根据环境设置日志级别
       Level logLevel;
       switch (F.appFlavor) {
         case Flavor.dev:
-          logLevel = Level.debug;
+          logLevel = Level.debug;    /// 开发环境：显示所有日志
           break;
         case Flavor.prod:
-          logLevel = Level.warning;
+          logLevel = Level.warning;  /// 生产环境：只显示警告和错误
           break;
         default:
-          logLevel = Level.debug;
+          logLevel = Level.debug;    /// 默认使用debug级别
       }
+
+      /// 创建Logger实例并配置打印选项
       _instance = Logger(
         level: logLevel,
         printer: PrettyPrinter(
-          methodCount: AppValues.loggerMethodCount,
-          // number of method calls to be displayed
-          errorMethodCount: AppValues.loggerErrorMethodCount,
-          // number of method calls if stacktrace is provided
-          lineLength: AppValues.loggerLineLength,
-          // width of the output
-          colors: true,
-          // Colorful log messages
-          printEmojis: true,
-          // Print an emoji for each log message
-          printTime: false // Should each log print contain a timestamp
-          ),
+          methodCount: AppValues.loggerMethodCount,      /// 显示的方法调用数量
+          errorMethodCount: AppValues.loggerErrorMethodCount,  /// 错误时显示的方法调用数量
+          lineLength: AppValues.loggerLineLength,        /// 输出行宽度
+          colors: true,                                  /// 启用彩色输出
+          printEmojis: true,                            /// 启用表情符号
+          printTime: false                              /// 不显示时间戳
+        ),
       );
     }
     return _instance!;

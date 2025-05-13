@@ -9,16 +9,40 @@
 import 'package:flutter_template_getx/app/core/values/app_values.dart';
 import 'package:logger/web.dart';
 
+/// 应用环境枚举
+/// 
+/// 用于区分不同的应用环境：
+/// - dev: 开发环境
+/// - prod: 生产环境
 enum Flavor {
+  /// 开发环境
   dev,
+  /// 生产环境
   prod,
 }
 
+/// 应用环境配置类
+/// 
+/// 用于管理不同环境下的应用配置，包括：
+/// - 应用名称
+/// - API基础URL
+/// - 日志开关
+/// - 其他环境相关配置
 class F {
+  /// 当前应用环境
   static Flavor? appFlavor;
 
+  /// 获取当前环境名称
+  /// 
+  /// 返回当前环境的名称字符串，如果未设置则返回空字符串
   static String get name => appFlavor?.name ?? '';
 
+  /// 获取应用标题
+  /// 
+  /// 根据当前环境返回对应的应用标题：
+  /// - 开发环境：'模板Dev'
+  /// - 生产环境：'模板Prod'
+  /// - 默认：'title'
   static String get title {
     switch (appFlavor) {
       case Flavor.dev:
@@ -30,6 +54,12 @@ class F {
     }
   }
 
+  /// 获取API基础URL
+  /// 
+  /// 根据当前环境返回对应的API基础地址：
+  /// - 开发环境：'https://dev.api.com'
+  /// - 生产环境：'https://prod.api.com'
+  /// - 默认：空字符串
   static String get apiBaseUrl {
     switch (appFlavor) {
       case Flavor.dev:
@@ -41,6 +71,12 @@ class F {
     }
   }
 
+  /// 获取日志开关状态
+  /// 
+  /// 根据当前环境返回是否启用日志：
+  /// - 开发环境：true（启用日志）
+  /// - 生产环境：false（禁用日志）
+  /// - 默认：false
   static bool get enableLogging {
     switch (appFlavor) {
       case Flavor.dev:
@@ -51,5 +87,4 @@ class F {
         return false;
     }
   }
-
 }

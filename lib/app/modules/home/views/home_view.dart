@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_template_getx/app/core/base/view/base_view.dart';
 import 'package:flutter_template_getx/app/core/base/widget/custom_appbar.dart';
+import 'package:flutter_template_getx/app/core/model/page_background.dart';
 import 'package:flutter_template_getx/app/core/utils/screen_adapter.dart';
 import 'package:flutter_template_getx/app/core/values/app_values.dart';
 import 'package:flutter_template_getx/app/modules/home/controllers/home_controller.dart';

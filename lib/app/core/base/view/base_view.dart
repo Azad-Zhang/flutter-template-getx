@@ -6,50 +6,17 @@
  * @FilePath: /flutter-template-getx/lib/app/core/base/view/base_view.dart
  * @Description: 基础视图类，提供统一的页面布局和状态管理
  */
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_template_getx/app/core/base/controller/base_controller.dart';
+import 'package:flutter_template_getx/app/core/model/page_background.dart';
 import 'package:flutter_template_getx/app/core/model/page_state.dart';
 import 'package:flutter_template_getx/app/core/utils/screen_adapter.dart';
 import 'package:flutter_template_getx/app/core/values/app_colors.dart';
 import 'package:flutter_template_getx/app/core/values/app_values.dart';
 import 'package:flutter_template_getx/app/core/widgets/elevated_container.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 
-/// 页面背景配置类
-class PageBackground {
-  /// 背景图片路径
-  final String imagePath;
 
-  /// 背景图片位置
-  final Alignment alignment;
-
-  /// 背景图片宽度
-  final double width;
-
-  /// 背景图片高度
-  final double height;
-
-  final BoxFit fit;
-
-  final double top;
-
-  final double left;
-
-  const PageBackground({
-    required this.imagePath,
-    this.alignment = Alignment.center,
-    this.width = 100,
-    this.height = 100,
-    this.top = 0,
-    this.left = 0,
-    this.fit = BoxFit.cover,
-  });
-}
 
 /// 基础视图类
 /// 提供统一的页面布局和状态管理
@@ -135,10 +102,8 @@ abstract class BaseView<Controller extends BaseController>
     return Center(
       child: ElevatedContainer(
         padding: EdgeInsets.all(AppValues.margin),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(AppValues.smallRadius),
-        ),
+        borderRadius: AppValues.smallRadius,
+        bgColor: Colors.white,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
