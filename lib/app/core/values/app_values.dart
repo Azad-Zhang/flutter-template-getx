@@ -46,4 +46,5 @@ abstract class AppValues {
   /// 
   /// 用于定义基础UI元素的尺寸
   static const double smallRadius = 8;           /// 小圆角半径
+  static const double radius = 16;               /// 对话框圆角半径
 }

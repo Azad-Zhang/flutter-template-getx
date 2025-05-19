@@ -17,6 +17,7 @@ import 'package:get/get.dart';
 import 'package:flutter_template_getx/gen/assets.gen.dart';
 import 'package:flutter_template_getx/app/core/theme/theme_controller.dart';
 import 'package:flutter_template_getx/app/core/utils/permission_util.dart';
+import 'package:flutter_template_getx/app/core/utils/toast_util.dart';
 
 import '../../../../flavors.dart';
 import '../../../core/translations/translation_keys.dart';
@@ -223,10 +224,7 @@ class HomeView extends BaseView<HomeController> {
             // 相机权限按钮
             InkWell(
               onTap: () async {
-                bool granted = await PermissionUtil.requestCamera();
-                if (granted) {
-                  Get.snackbar('提示', '相机权限已获取');
-                }
+                await PermissionUtil.requestCamera();
               },
               child: Container(
                 padding: EdgeInsets.all(AppValues.margin),
@@ -248,10 +246,7 @@ class HomeView extends BaseView<HomeController> {
             // 相册权限按钮
             InkWell(
               onTap: () async {
-                bool granted = await PermissionUtil.requestPhotos();
-                if (granted) {
-                  Get.snackbar('提示', '相册权限已获取');
-                }
+                await PermissionUtil.requestPhotos();
               },
               child: Container(
                 padding: EdgeInsets.all(AppValues.margin),
@@ -273,10 +268,7 @@ class HomeView extends BaseView<HomeController> {
             // 位置权限按钮
             InkWell(
               onTap: () async {
-                bool granted = await PermissionUtil.requestLocation();
-                if (granted) {
-                  Get.snackbar('提示', '位置权限已获取');
-                }
+                await PermissionUtil.requestLocation();
               },
               child: Container(
                 padding: EdgeInsets.all(AppValues.margin),
