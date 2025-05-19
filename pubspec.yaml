@@ -14,6 +14,7 @@ dependencies:
   flutter_flavorizr: ^2.2.3   #环境管理
   mmkv: ^2.1.0                #本地存储
   flutter_gen_runner: ^5.4.0  #资源文件管理
+  permission_handler: ^11.3.0  #权限管理
   
   flutter: 
     sdk: flutter

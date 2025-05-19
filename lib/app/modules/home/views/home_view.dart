@@ -8,7 +8,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_template_getx/app/core/base/view/base_view.dart';
-import 'package:flutter_template_getx/app/core/base/widget/custom_appbar.dart';
+import 'package:flutter_template_getx/app/core/widgets/custom_appbar.dart';
 import 'package:flutter_template_getx/app/core/model/page_background.dart';
 import 'package:flutter_template_getx/app/core/utils/screen_adapter.dart';
 import 'package:flutter_template_getx/app/core/values/app_values.dart';
@@ -16,6 +16,7 @@ import 'package:flutter_template_getx/app/modules/home/controllers/home_controll
 import 'package:get/get.dart';
 import 'package:flutter_template_getx/gen/assets.gen.dart';
 import 'package:flutter_template_getx/app/core/theme/theme_controller.dart';
+import 'package:flutter_template_getx/app/core/utils/permission_util.dart';
 
 import '../../../../flavors.dart';
 import '../../../core/translations/translation_keys.dart';
@@ -206,6 +207,93 @@ class HomeView extends BaseView<HomeController> {
                 ),
               ),
             ),
+
+            SizedBox(height: AppValues.margin_40),
+
+            // 权限测试按钮
+            Text(
+              '权限测试',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: AppValues.margin),
+
+            // 相机权限按钮
+            InkWell(
+              onTap: () async {
+                bool granted = await PermissionUtil.requestCamera();
+                if (granted) {
+                  Get.snackbar('提示', '相机权限已获取');
+                }
+              },
+              child: Container(
+                padding: EdgeInsets.all(AppValues.margin),
+                decoration: BoxDecoration(
+                  color: Colors.blue.withAlpha(230),
+                  borderRadius: BorderRadius.circular(AppValues.smallRadius),
+                ),
+                child: Text(
+                  '请求相机权限',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: AppValues.margin),
+
+            // 相册权限按钮
+            InkWell(
+              onTap: () async {
+                bool granted = await PermissionUtil.requestPhotos();
+                if (granted) {
+                  Get.snackbar('提示', '相册权限已获取');
+                }
+              },
+              child: Container(
+                padding: EdgeInsets.all(AppValues.margin),
+                decoration: BoxDecoration(
+                  color: Colors.green.withAlpha(230),
+                  borderRadius: BorderRadius.circular(AppValues.smallRadius),
+                ),
+                child: Text(
+                  '请求相册权限',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: AppValues.margin),
+
+            // 位置权限按钮
+            InkWell(
+              onTap: () async {
+                bool granted = await PermissionUtil.requestLocation();
+                if (granted) {
+                  Get.snackbar('提示', '位置权限已获取');
+                }
+              },
+              child: Container(
+                padding: EdgeInsets.all(AppValues.margin),
+                decoration: BoxDecoration(
+                  color: Colors.orange.withAlpha(230),
+                  borderRadius: BorderRadius.circular(AppValues.smallRadius),
+                ),
+                child: Text(
+                  '请求位置权限',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: AppValues.margin_40),
           ],
         ),
       ),

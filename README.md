@@ -23,16 +23,3 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-flutter run -d d33ac056f4719248c9bdc4f084761b72df3ddf6e -- lib/main_dev.dart --flavor
-
-flutter run -d 2211133c --target lib/main_dev.dart --flavor dev
-
-flutter run -d d33ac056f4719248c9bdc4f084761b72df3ddf6e -t lib/main_dev.dart
-
-flutter run -d 2211133c -t lib/main_dev.dart
-
-flutter run --flavor dev -t lib/main_dev.dart -d 2211133c
-
-npx git-cz
-
-flutter pub run build_runner build
