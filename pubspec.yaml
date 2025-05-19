@@ -15,6 +15,7 @@ dependencies:
   mmkv: ^2.1.0                #本地存储
   flutter_gen_runner: ^5.4.0  #资源文件管理
   permission_handler: ^11.3.0  #权限管理
+  dio: ^5.4.1                 #网络请求
   
   flutter: 
     sdk: flutter

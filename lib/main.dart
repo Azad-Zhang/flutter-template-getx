@@ -31,6 +31,15 @@ import 'app/core/theme/theme_controller.dart';
 /// 导入语言控制器
 import 'app/core/controllers/language_controller.dart';
 
+/// 导入存储服务
+import 'app/core/service/storage_service.dart';
+
+/// 导入Flavors
+import 'flavors.dart';
+
+/// 导入AppValues
+import 'app/core/values/app_values.dart';
+
 /// 应用入口函数
 /// 
 /// 负责初始化应用所需的各种配置和服务
@@ -61,6 +70,7 @@ FutureOr<void> main() async {
 /// 负责初始化应用的基础配置，包括：
 /// 1. MMKV本地存储初始化
 /// 2. 屏幕适配初始化
+/// 3. 默认API区域设置
 Future<void> initSetting() async {
   // 初始化MMKV并获取根目录
   final rootDir = await MMKV.initialize();
@@ -68,6 +78,14 @@ Future<void> initSetting() async {
   
   // 初始化屏幕适配
   await ScreenUtil.ensureScreenSize();
+
+  // 设置默认API区域
+  final storage = SecureStorageService.instance;
+  final regionValue = await storage.getInt(AppValues.apiRegionKey);
+  if (regionValue == null) {
+    // 如果没有设置过API区域，默认设置为中国
+    await F.setApiRegion(ApiRegion.cn);
+  }
 }
 
 

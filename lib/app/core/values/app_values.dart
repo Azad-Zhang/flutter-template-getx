@@ -16,6 +16,12 @@ abstract class AppValues {
   /// 测试值常量
   static const String testValue = "TEST_VALUE";
 
+  /// 令牌键名
+  static const String idToken = "ID_TOKEN";
+
+  /// API 区域设置的存储 key
+  static const String apiRegionKey = "API_REGION";
+
   /// 日志配置相关常量
   /// 
   /// 用于配置日志打印的格式和内容
