@@ -47,7 +47,7 @@ class PermissionUtil {
     }
     
     if (status.isDenied || status.isPermanentlyDenied) {
-      bool? result = await DialogUtil.showPermissionDialog(Get.context!, '相机');
+      bool? result = await DialogUtil.showPermissionDialog(Get.context!, T.camera.tr);
       if (result == true) {
         await _openSettings();
       }
@@ -68,7 +68,7 @@ class PermissionUtil {
     }
     
     if (status.isDenied || status.isPermanentlyDenied) {
-      bool? result = await DialogUtil.showPermissionDialog(Get.context!, '相册');
+      bool? result = await DialogUtil.showPermissionDialog(Get.context!, T.photos.tr);
       if (result == true) {
         await _openSettings();
       }
@@ -89,7 +89,7 @@ class PermissionUtil {
     }
     
     if (status.isDenied || status.isPermanentlyDenied) {
-      bool? result = await DialogUtil.showPermissionDialog(Get.context!, '麦克风');
+      bool? result = await DialogUtil.showPermissionDialog(Get.context!, T.microphone.tr);
       if (result == true) {
         await _openSettings();
       }
@@ -110,7 +110,7 @@ class PermissionUtil {
     }
     
     if (status.isDenied || status.isPermanentlyDenied) {
-      bool? result = await DialogUtil.showPermissionDialog(Get.context!, '位置');
+      bool? result = await DialogUtil.showPermissionDialog(Get.context!, T.location.tr);
       if (result == true) {
         await _openSettings();
       }
@@ -131,7 +131,7 @@ class PermissionUtil {
     }
     
     if (status.isDenied || status.isPermanentlyDenied) {
-      bool? result = await DialogUtil.showPermissionDialog(Get.context!, '通知');
+      bool? result = await DialogUtil.showPermissionDialog(Get.context!, T.notification.tr);
       if (result == true) {
         await _openSettings();
       }

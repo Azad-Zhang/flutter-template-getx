@@ -30,6 +30,18 @@ class AppTranslations extends Translations {
           T.enableLogging: '是否开启日志',
           T.memoryString: '内存字符串',
           T.setMemoryString: '设置内存字符串',
+
+          // 权限
+          T.permissionRequest: '权限申请',
+          T.permissionRequestContent: '需要%s权限才能使用此功能，是否前往设置页面开启权限？',
+          T.goToSettings: '去设置',
+
+          // 权限名称
+          T.camera: '相机',
+          T.photos: '相册',
+          T.microphone: '麦克风',
+          T.location: '位置',
+          T.notification: '通知',
         },
 
         /// 英文翻译
@@ -53,6 +65,18 @@ class AppTranslations extends Translations {
           T.enableLogging: 'Enable Logging',
           T.memoryString: 'Memory String',
           T.setMemoryString: 'Set Memory String',
+
+          // Permissions
+          T.permissionRequest: 'Permission Request',
+          T.permissionRequestContent: 'Need %s permission to use this feature. Would you like to go to settings to enable it?',
+          T.goToSettings: 'Settings',
+
+          // Permission Names
+          T.camera: 'Camera',
+          T.photos: 'Photos',
+          T.microphone: 'Microphone',
+          T.location: 'Location',
+          T.notification: 'Notification',
         },
       };
 } 

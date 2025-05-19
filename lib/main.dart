@@ -28,6 +28,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 /// 导入主题控制器
 import 'app/core/theme/theme_controller.dart';
 
+/// 导入语言控制器
+import 'app/core/controllers/language_controller.dart';
+
 /// 应用入口函数
 /// 
 /// 负责初始化应用所需的各种配置和服务
@@ -45,6 +48,9 @@ FutureOr<void> main() async {
   
   // 初始化主题控制器
   Get.put(ThemeController());
+  
+  // 初始化语言控制器
+  Get.put(LanguageController());
   
   // 启动应用
   runApp(const App());

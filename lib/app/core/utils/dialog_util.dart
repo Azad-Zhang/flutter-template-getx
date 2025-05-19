@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_template_getx/app/core/values/app_colors.dart';
 import 'package:flutter_template_getx/app/core/values/app_values.dart';
+import 'package:get/get.dart';
+import 'package:flutter_template_getx/app/core/translations/translation_keys.dart';
 
 class DialogUtil {
   /// 显示权限设置对话框
@@ -47,7 +49,7 @@ class DialogUtil {
                 
                 // 标题
                 Text(
-                  '权限申请',
+                  T.permissionRequest.tr,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -58,7 +60,7 @@ class DialogUtil {
                 
                 // 内容
                 Text(
-                  '需要$permissionName权限才能使用此功能，是否前往设置页面开启权限？',
+                  T.permissionRequestContent.trArgs([permissionName]),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
@@ -83,7 +85,7 @@ class DialogUtil {
                           ),
                         ),
                         child: Text(
-                          '取消',
+                          T.cancel.tr,
                           style: TextStyle(
                             color: Colors.black54,
                             fontSize: 16,
@@ -107,7 +109,7 @@ class DialogUtil {
                           elevation: 0,
                         ),
                         child: Text(
-                          '去设置',
+                          T.goToSettings.tr,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,

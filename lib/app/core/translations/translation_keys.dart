@@ -23,4 +23,18 @@ abstract class T {
   static const String enableLogging = 'enableLogging';  /// 日志开关
   static const String memoryString = 'memoryString';    /// 内存字符串
   static const String setMemoryString = 'setMemoryString';  /// 设置内存字符串
+
+  /// 权限相关翻译键
+  /// 
+  /// 包含权限相关的文本内容
+  static const String permissionRequest = 'permissionRequest';
+  static const String permissionRequestContent = 'permissionRequestContent';
+  static const String goToSettings = 'goToSettings';
+  
+  /// 权限名称
+  static const String camera = 'camera';
+  static const String photos = 'photos';
+  static const String microphone = 'microphone';
+  static const String location = 'location';
+  static const String notification = 'notification';
 } 

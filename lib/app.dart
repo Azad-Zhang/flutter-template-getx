@@ -31,6 +31,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 /// 导入应用环境配置
 import 'flavors.dart';
 
+/// 导入语言控制器
+import 'package:flutter_template_getx/app/core/controllers/language_controller.dart';
+
 /// 应用根组件
 /// 
 /// 负责配置和初始化应用的核心功能，包括：
@@ -45,6 +48,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final languageController = Get.find<LanguageController>();
+    
     return ScreenUtilInit(
       // 设计稿尺寸，用于屏幕适配
       designSize: const Size(375, 812),
@@ -70,8 +75,8 @@ class App extends StatelessWidget {
           getPages: AppPages.routes,
           // 国际化配置
           translations: AppTranslations(),
-          // 默认语言：简体中文
-          locale: const Locale('zh', 'CN'),
+          // 默认语言：系统语言
+          locale: languageController.currentLocale,
           // 备用语言：英文
           fallbackLocale: const Locale('en', 'US'),
           // 亮色主题

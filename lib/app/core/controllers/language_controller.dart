@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart' show Locale;
+import 'package:flutter/foundation.dart' show PlatformDispatcher;
 
 /// 语言控制器
 /// 
@@ -9,13 +10,26 @@ class LanguageController extends GetxController {
   /// 当前语言区域设置
   /// 
   /// 使用 Rx 变量实现响应式更新
-  /// 默认为中文（简体）
-  final _currentLocale = const Locale('zh', 'CN').obs;
+  /// 默认为系统语言
+  final _currentLocale = _getSystemLocale().obs;
 
   /// 获取当前语言区域设置
   /// 
   /// 返回当前的语言区域对象
   Locale get currentLocale => _currentLocale.value;
+
+  /// 获取系统语言
+  /// 
+  /// 返回系统当前的语言设置
+  /// 如果系统语言不是中文或英文，则默认使用英文
+  static Locale _getSystemLocale() {
+    final String systemLanguage = PlatformDispatcher.instance.locale.languageCode;
+    if (systemLanguage == 'zh') {
+      return const Locale('zh', 'CN');
+    } else {
+      return const Locale('en', 'US');
+    }
+  }
 
   /// 切换应用程序语言
   /// 
