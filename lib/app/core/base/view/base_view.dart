@@ -7,16 +7,16 @@
  * @Description: 基础视图类，提供统一的页面布局和状态管理
  */
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_template_getx/app/core/base/controller/base_controller.dart';
 import 'package:flutter_template_getx/app/core/model/page_background.dart';
 import 'package:flutter_template_getx/app/core/model/page_state.dart';
 import 'package:flutter_template_getx/app/core/utils/screen_adapter.dart';
 import 'package:flutter_template_getx/app/core/values/app_colors.dart';
 import 'package:flutter_template_getx/app/core/values/app_values.dart';
+import 'package:flutter_template_getx/app/core/widgets/custom_appbar.dart';
 import 'package:flutter_template_getx/app/core/widgets/elevated_container.dart';
 import 'package:get/get.dart';
-
-
 
 /// 基础视图类
 /// 提供统一的页面布局和状态管理
@@ -29,71 +29,77 @@ abstract class BaseView<Controller extends BaseController>
   /// 页面背景配置
   final PageBackground? bgImage;
 
+  /// 状态栏背景颜色
+  final Color statusBarColor;
+
+  /// 状态栏图标颜色（亮色/暗色）
+  final Brightness statusBarIconBrightness;
+
+  /// 状态栏样式
+  final SystemUiOverlayStyle? statusBarStyle;
+
   BaseView({
     super.key,
     this.bgColor = Colors.white,
     this.bgImage,
+    this.statusBarColor = Colors.transparent,
+    this.statusBarIconBrightness = Brightness.dark,
+    this.statusBarStyle,
   });
 
   /// 页面主体内容
   Widget body(BuildContext context);
 
   /// 页面顶部导航栏
-  PreferredSizeWidget? appBar(BuildContext context);
+  Widget? appBar(BuildContext context);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: bgColor,
-      extendBodyBehindAppBar: true,
-      appBar: appBar(context) != null
-          ? PreferredSize(
-              preferredSize: const Size.fromHeight(kToolbarHeight),
-              child: Container(
-                color: Colors.transparent,
-                child: appBar(context),
-              ),
-            )
-          : null,
-      body: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          // 背景图片
-          if (bgImage != null)
-            Positioned(
-                top: bgImage!.top,
-                left: bgImage!.left,
-                  child: Container(
-                    
-                    width: bgImage!.width,
-                  height: bgImage!.height,
-                    decoration: BoxDecoration(
-                      // color: Colors.red,
-                      image: DecorationImage(
-                          image: AssetImage(bgImage!.imagePath),
-                          fit: bgImage!.fit),
-                    ),
-                  
-                )),
+    // 设置状态栏样式
+    SystemChrome.setSystemUIOverlayStyle(
+      statusBarStyle ??
+          SystemUiOverlayStyle(
+            statusBarColor: statusBarColor,
+            statusBarIconBrightness: statusBarIconBrightness,
+            statusBarBrightness: statusBarIconBrightness == Brightness.dark
+                ? Brightness.light
+                : Brightness.dark,
+          ),
+    );
 
-          // 主体内容
-          bgImage != null ? Container(
-            margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top + kToolbarHeight) ,
-            child: body(context),
-          ) : body(context),
-          // body(context),
+    return Material(
+      color: bgColor,
+      child: Stack(clipBehavior: Clip.none, children: [
+        if (bgImage != null)
+          Positioned(
+            top: bgImage!.top - MediaQuery.of(Get.context!).padding.top,
+            left: bgImage!.left,
+            child: Container(
+              // color: Colors.red,
+              width: bgImage!.width,
+              height: bgImage!.height,
+              // color: Colors.red,
+              child: Image.asset(bgImage!.imagePath, fit: bgImage!.fit),
+            ),
+          ),
+        SafeArea(
+          child: Column(
+            children: [
+              appBar(context) != null ? appBar(context)! : const SizedBox(),
+              Expanded(child: body(context)),
+            ],
+          ),
+        ),
+        // 加载状态遮罩
+        // Obx(() => controller.pageState == PageState.LOADING
+        //     ? shadowBox()
+        //     : Container()),
 
-          // 加载状态遮罩
-          Obx(() => controller.pageState == PageState.LOADING
-              ? shadowBox()
-              : Container()),
-
-          // 加载提示
-          Obx(() => controller.pageState == PageState.LOADING
-              ? _showLoading(controller.loadingMessage)
-              : Container()),
-        ],
-      ),
+        // 加载提示
+        // Obx(() => controller.pageState == PageState.LOADING
+        //     ? _showLoading(controller.loadingMessage)
+        //     : Container()),
+      ]),
     );
   }
 

@@ -38,14 +38,13 @@ class HomeView extends BaseView<HomeController> {
         );
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) {
+  Widget? appBar(BuildContext context) {
+    // return null;
     return CustomAppBar(
       title: Text(T.home.tr, style: TextStyle(color: Colors.black)),
-      backgroundColor: Colors.transparent,
-      centerTitle: true,
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: Brightness.light,
+            centerTitle: true,
+            backgroundColor: Colors.transparent,
+            actions: [],
     );
   }
 
