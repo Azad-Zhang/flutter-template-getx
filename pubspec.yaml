@@ -16,6 +16,9 @@ dependencies:
   flutter_gen_runner: ^5.4.0  #资源文件管理
   permission_handler: ^11.3.0  #权限管理
   dio: ^5.4.1                 #网络请求
+  gap: ^3.0.1                 #间距
+  flutter_svg: ^2.1.0         #svg图片
+  url_launcher: ^6.3.1        #url跳转
   
   flutter: 
     sdk: flutter

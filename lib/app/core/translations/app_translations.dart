@@ -42,6 +42,37 @@ class AppTranslations extends Translations {
           T.microphone: '麦克风',
           T.location: '位置',
           T.notification: '通知',
+
+          // 登录
+          T.login: '登录',
+          T.loginWithAccount: '账号密码登录',
+          T.loginPrompt: '请使用已注册的账号密码',
+          T.pleaseInputUsername: '请输入用户名',
+          T.pleaseInputPassword: '请输入6~12位密码',
+          T.username: '用户名',
+          T.password: '密码',
+          T.rememberPassword: '记住密码',
+          T.forgetPassword: '忘记密码？',
+          T.otherLogin: '其他登录方式',
+          T.passwordError: '密码错误',
+          T.toRegister: '使用账号密码注册',
+
+          // 注册 
+          T.register: '注册',
+          T.registerPrompt: '请输入注册信息',
+          T.pleaseInputConfirmPassword: '请输入确认密码',
+
+          // 协议
+          T.protocol: '协议',
+          T.protocolContent: '协议内容',
+          T.protocolAgree: '同意',
+          T.protocolDisagree: '不同意',
+
+          // 协议前缀
+          T.agreementPrefix: '我已阅读并同意',
+          T.userAgreement: '《用户协议》',
+          T.and: '和',
+          T.privacyPolicy: '《隐私政策》',
         },
 
         /// 英文翻译
@@ -77,6 +108,35 @@ class AppTranslations extends Translations {
           T.microphone: 'Microphone',
           T.location: 'Location',
           T.notification: 'Notification',
+
+          // Login
+          T.login: 'Login',
+          T.loginWithAccount: 'Login with Account',
+          T.loginPrompt: 'Please use the registered account password',
+          T.pleaseInputUsername: 'Please input username',
+          T.pleaseInputPassword: 'Please input 6~12 password',
+          T.username: 'Username',
+          T.password: 'Password',
+          T.rememberPassword: 'Remember Password',
+          T.forgetPassword: 'Forget Password?',
+          T.toRegister: 'Register with Account',
+
+          // Register
+          T.register: 'Register',
+          T.registerPrompt: 'Please input register information',
+          T.pleaseInputConfirmPassword: 'Please input confirm password',
+
+          // Protocol
+          T.protocol: 'Protocol',
+          T.protocolContent: 'Protocol Content',
+          T.protocolAgree: 'Agree',
+          T.protocolDisagree: 'Disagree',
+
+          // Agreement
+          T.agreementPrefix: 'I have read and agree to',
+          T.userAgreement: '《User Agreement》',
+          T.and: 'and',
+          T.privacyPolicy: '《Privacy Policy》',
         },
       };
 } 

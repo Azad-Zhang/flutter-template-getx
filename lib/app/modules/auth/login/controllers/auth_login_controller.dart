@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_template_getx/app/core/base/controller/base_controller.dart';
 import 'package:flutter_template_getx/app/network/repositories/account_repository_impl.dart';
 
-class AuthLoginController extends GetxController {
+class AuthLoginController extends BaseController {
   final AccountRepositoryImpl _accountRepository = Get.find<AccountRepositoryImpl>();
 
   final ScrollController scrollController = ScrollController();
@@ -19,6 +20,12 @@ class AuthLoginController extends GetxController {
   // 添加焦点节点
   final FocusNode usernameFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
+
+  /// 是否记住密码
+  final rememberPassword = false.obs;
+
+  /// 是否同意协议
+  final agreement = false.obs;
 
   void setUsername(String value) => username.value = value;
   void setPassword(String value) => password.value = value;
@@ -53,6 +60,8 @@ class AuthLoginController extends GetxController {
   }
 
   final count = 0.obs;
+
+
   @override
   void onInit() {
     super.onInit();

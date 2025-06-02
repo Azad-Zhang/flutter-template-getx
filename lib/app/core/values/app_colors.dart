@@ -28,7 +28,7 @@ abstract class AppColors {
   /// 应用的默认页面背景色
   /// 用于页面容器、卡片背景等场景
   /// 颜色值：浅灰色 (#FAFAFA)
-  static const Color pageBackground = Color(0xFFFAFAFA);
+  static const Color pageBackground = Color(0xFFF7F8FA);
 
   /// 带透明度的容器背景色
   /// 
@@ -36,4 +36,15 @@ abstract class AppColors {
   /// 透明度为128（50%）
   /// 基于灰色（Colors.grey）创建
   static Color elevatedContainerColorOpacity = Colors.grey.withAlpha(128);
+
+  /// 常用颜色 000 999 666 333
+  static const Color color000 = Color(0xFF000000);
+  static const Color color999 = Color(0xFF999999);
+  static const Color color666 = Color(0xFF666666);
+  static const Color color333 = Color(0xFF333333);
+
+  /// 提示色
+  static const Color hintColor = Color(0xFFC8C9CC);
+
+  static const Color primaryGreen = Color(0xFF57C051);
 }

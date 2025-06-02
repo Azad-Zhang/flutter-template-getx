@@ -2,11 +2,18 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_template_getx/app/core/base/controller/base_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_template_getx/app/network/repositories/account_repository_impl.dart';
+import 'package:flutter/services.dart';
 
 class AuthRegisterController extends BaseController {
   final AccountRepositoryImpl _accountRepository = Get.find<AccountRepositoryImpl>();
 
-  final accountFocus = FocusNode();
+  // 输入控制器
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+
+  // 焦点节点
+  final usernameFocus = FocusNode();
   final passwordFocus = FocusNode();
   final confirmPasswordFocus = FocusNode();
   
@@ -16,9 +23,58 @@ class AuthRegisterController extends BaseController {
   final isLoading = false.obs;
   final errorMessage = ''.obs;
 
-  void setUsername(String value) => username.value = value;
-  void setPassword(String value) => password.value = value;
-  void setConfirmPassword(String value) => confirmPassword.value = value;
+  @override
+  void onInit() {
+    super.onInit();
+    // 设置键盘场景标记
+    SystemChannels.textInput.invokeMethod('TextInput.setCurrentIsKeyboardScene', true);
+    
+    // 监听输入变化
+    usernameController.addListener(() {
+      username.value = usernameController.text;
+    });
+    passwordController.addListener(() {
+      password.value = passwordController.text;
+    });
+    confirmPasswordController.addListener(() {
+      confirmPassword.value = confirmPasswordController.text;
+    });
+
+    // 监听焦点变化
+    usernameFocus.addListener(_handleUsernameFocusChange);
+    passwordFocus.addListener(_handlePasswordFocusChange);
+    confirmPasswordFocus.addListener(_handleConfirmPasswordFocusChange);
+  }
+
+  void _handleUsernameFocusChange() {
+    if (usernameFocus.hasFocus) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        if (usernameFocus.hasFocus) {
+          SystemChannels.textInput.invokeMethod('TextInput.show');
+        }
+      });
+    }
+  }
+
+  void _handlePasswordFocusChange() {
+    if (passwordFocus.hasFocus) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        if (passwordFocus.hasFocus) {
+          SystemChannels.textInput.invokeMethod('TextInput.show');
+        }
+      });
+    }
+  }
+
+  void _handleConfirmPasswordFocusChange() {
+    if (confirmPasswordFocus.hasFocus) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        if (confirmPasswordFocus.hasFocus) {
+          SystemChannels.textInput.invokeMethod('TextInput.show');
+        }
+      });
+    }
+  }
 
   Future<void> register() async {
     if (username.value.isEmpty || password.value.isEmpty || confirmPassword.value.isEmpty) {
@@ -60,17 +116,29 @@ class AuthRegisterController extends BaseController {
   }
 
   @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
   void onReady() {
     super.onReady();
   }
 
   @override
   void onClose() {
+    // 清理控制器
+    usernameController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    
+    // 清理焦点节点
+    usernameFocus.removeListener(_handleUsernameFocusChange);
+    passwordFocus.removeListener(_handlePasswordFocusChange);
+    confirmPasswordFocus.removeListener(_handleConfirmPasswordFocusChange);
+    
+    usernameFocus.dispose();
+    passwordFocus.dispose();
+    confirmPasswordFocus.dispose();
+    
+    // 重置键盘场景标记
+    SystemChannels.textInput.invokeMethod('TextInput.setCurrentIsKeyboardScene', false);
+    
     super.onClose();
   }
 }

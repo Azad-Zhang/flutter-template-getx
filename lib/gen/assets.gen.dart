@@ -19,8 +19,39 @@ class $AssetsImagesGen {
   /// File path: assets/images/flower.jpg
   AssetGenImage get flower => const AssetGenImage('assets/images/flower.jpg');
 
+  /// File path: assets/images/icon_apple.svg
+  String get iconApple => 'assets/images/icon_apple.svg';
+
+  /// File path: assets/images/icon_qq.svg
+  String get iconQq => 'assets/images/icon_qq.svg';
+
+  /// File path: assets/images/icon_wechart.svg
+  String get iconWechart => 'assets/images/icon_wechart.svg';
+
+  /// File path: assets/images/password_lock.svg
+  String get passwordLock => 'assets/images/password_lock.svg';
+
+  /// File path: assets/images/password_nosee.svg
+  String get passwordNosee => 'assets/images/password_nosee.svg';
+
+  /// File path: assets/images/password_see.svg
+  String get passwordSee => 'assets/images/password_see.svg';
+
+  /// File path: assets/images/phone.svg
+  String get phone => 'assets/images/phone.svg';
+
   /// List of all assets
-  List<AssetGenImage> get values => [backBlueBlur, flower];
+  List<dynamic> get values => [
+        backBlueBlur,
+        flower,
+        iconApple,
+        iconQq,
+        iconWechart,
+        passwordLock,
+        passwordNosee,
+        passwordSee,
+        phone
+      ];
 }
 
 class Assets {

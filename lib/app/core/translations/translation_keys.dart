@@ -37,4 +37,38 @@ abstract class T {
   static const String microphone = 'microphone';
   static const String location = 'location';
   static const String notification = 'notification';
+
+  /// 登录相关翻译键
+  static const String login = 'login';
+  static const String loginWithAccount = 'loginWithAccount';
+  static const String username = 'username';
+  static const String password = 'password';
+  static const String loginPrompt = 'loginPrompt';
+  static const String pleaseInputUsername = 'pleaseInputUsername';
+  static const String pleaseInputPassword = 'pleaseInputPassword';
+  static const String rememberPassword = 'rememberPassword';
+  static const String forgetPassword = 'forgetPassword';
+  static const String otherLogin = 'otherLogin';
+  static const String passwordError = 'passwordError';
+  static const String toRegister = 'toRegister';
+
+  /// 注册相关翻译键
+  static const String register = 'register';
+  static const String registerPrompt = 'registerPrompt';
+  static const String pleaseInputConfirmPassword = 'pleaseInputConfirmPassword';
+
+  /// 协议相关翻译键
+  static const String protocol = 'protocol';
+  static const String protocolContent = 'protocolContent';
+  static const String protocolAgree = 'protocolAgree';
+  static const String protocolDisagree = 'protocolDisagree';
+
+  /// 协议前缀
+  static const String agreementPrefix = 'agreementPrefix';
+  /// 用户协议
+  static const String userAgreement = 'userAgreement';
+  /// 和
+  static const String and = 'and';
+  /// 隐私政策
+  static const String privacyPolicy = 'privacyPolicy';
 } 
