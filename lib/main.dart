@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 
 /// 导入应用主入口
 import 'package:flutter_template_getx/app.dart';
+import 'package:flutter_template_getx/app/routes/app_pages.dart';
 
 /// 导入MMKV本地存储
 import 'package:mmkv/mmkv.dart';
@@ -41,7 +42,7 @@ import 'flavors.dart';
 import 'app/core/values/app_values.dart';
 
 /// 应用入口函数
-/// 
+///
 /// 负责初始化应用所需的各种配置和服务
 /// 包括：
 /// 1. Flutter绑定初始化
@@ -51,42 +52,47 @@ import 'app/core/values/app_values.dart';
 FutureOr<void> main() async {
   // 确保Flutter绑定初始化
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // 初始化应用设置
-  await initSetting();
-  
+  String initialRoute = await initSetting();
+
   // 初始化主题控制器
   Get.put(ThemeController());
-  
+
   // 初始化语言控制器
   Get.put(LanguageController());
-  
+
   // 启动应用
-  runApp(const App());
+  runApp(App(initialRoute: initialRoute));
 }
 
 /// 初始化应用设置
-/// 
+///
 /// 负责初始化应用的基础配置，包括：
 /// 1. MMKV本地存储初始化
 /// 2. 屏幕适配初始化
 /// 3. 默认API区域设置
-Future<void> initSetting() async {
+Future<String> initSetting() async {
   // 初始化MMKV并获取根目录
   final rootDir = await MMKV.initialize();
   print('MMKV for flutter with rootDir = $rootDir');
-  
+
   // 初始化屏幕适配
   await ScreenUtil.ensureScreenSize();
 
   // 设置默认API区域
   final storage = SecureStorageService.instance;
+  // storage.delete(AppValues.accessToken);
+  // storage.delete(AppValues.refreshToken);
   final regionValue = await storage.getInt(AppValues.apiRegionKey);
   if (regionValue == null) {
     // 如果没有设置过API区域，默认设置为中国
     await F.setApiRegion(ApiRegion.cn);
   }
+
+  final token = storage.getString(AppValues.accessToken);
+  print("token: $token");
+  final initialRoute =
+      token == null || token.isEmpty ? Routes.AUTH_LOGIN : Routes.TABS;
+  return initialRoute;
 }
-
-
-

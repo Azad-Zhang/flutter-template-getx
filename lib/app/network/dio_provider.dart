@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter_template_getx/app/core/service/storage_service.dart';
 import 'package:flutter_template_getx/app/network/pretty_dio_logger.dart';
 import 'package:flutter_template_getx/app/network/request_header.dart';
@@ -15,7 +16,7 @@ class DioProvider {
   /// 基础 URL
   static String get baseUrl {
     // TODO: 根据环境返回不同的 baseUrl
-    return 'https://api.example.com';
+    return 'https://81.71.13.182';
   }
 
   /// Dio 单例实例
@@ -23,10 +24,11 @@ class DioProvider {
 
   /// 日志拦截器
   static final _prettyDioLogger = PrettyDioLogger(
+    request: true,
     requestHeader: true,
-    requestBody: false,
-    responseBody: false,
-    responseHeader: false,
+    requestBody: true,
+    responseBody: true,
+    responseHeader: true,
     error: true,
     compact: true,
     maxWidth: 90,
@@ -39,12 +41,21 @@ class DioProvider {
     receiveTimeout: const Duration(seconds: 10),
     contentType: 'application/json',
     responseType: ResponseType.json,
+    // validateStatus: (status) {
+    //   // 只要不是500等致命错误，都让业务层自己处理
+    //    return status != null && status >= 200 && status < 600;
+    // }
   );
 
   /// 获取基础 Dio 实例（带日志拦截器）
   static Dio get httpDio {
     if (_instance == null) {
       _instance = Dio(_options);
+      // 关闭证书校验，仅开发环境使用！
+      (_instance!.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate = (client) {
+        client.badCertificateCallback = (cert, host, port) => true;
+        return client;
+      };
       _instance!.interceptors.add(_prettyDioLogger);
     } else {
       _instance!.interceptors.clear();

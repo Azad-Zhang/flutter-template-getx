@@ -9,6 +9,7 @@ import 'package:flutter_template_getx/app/core/widgets/image_wrapper.dart';
 import 'package:flutter_template_getx/app/core/widgets/svg_wrapper.dart';
 import 'package:flutter_template_getx/app/modules/auth/widgets/auth_checkbox.dart';
 import 'package:flutter_template_getx/app/modules/auth/widgets/auth_text_field.dart';
+import 'package:flutter_template_getx/app/routes/app_pages.dart';
 import 'package:flutter_template_getx/gen/assets.gen.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -85,6 +86,7 @@ class AuthLoginView extends BaseView<AuthLoginController> {
           hintText: T.pleaseInputUsername.tr,
           svgPath: Assets.images.phone,
           svgSize: ScreenAdapter.height(24),
+          controller: controller.usernameController,
         ),
         Gap(ScreenAdapter.height(16)),
         AuthTextField(
@@ -93,6 +95,7 @@ class AuthLoginView extends BaseView<AuthLoginController> {
           svgSize: ScreenAdapter.height(24),
           isPassword: true,
           keyboardType: TextInputType.visiblePassword,
+          controller: controller.passwordController,
         ),
         Gap(ScreenAdapter.height(12)),
       ],
@@ -199,17 +202,22 @@ class AuthLoginView extends BaseView<AuthLoginController> {
   }
 
   Widget _toRegister() {
-    return Text(T.toRegister.tr,
-        style: F13H20C333.copyWith(
-            color: AppColors.primaryGreen,
-            fontSize: ScreenAdapter.fontSize(14)));
+    return InkWell(
+        onTap: () {
+          Get.toNamed(Routes.AUTH_REGISTER);
+        },
+        child: Text(T.toRegister.tr,
+            style: F13H20C333.copyWith(
+                color: AppColors.primaryGreen,
+                fontSize: ScreenAdapter.fontSize(14))));
   }
 
   Widget _otherLogin() {
     return Container(
         height: ScreenAdapter.height(108),
         width: double.infinity,
-        margin: EdgeInsets.only(top: ScreenAdapter.height(115),bottom: ScreenAdapter.height(20)),
+        margin: EdgeInsets.only(
+            top: ScreenAdapter.height(115), bottom: ScreenAdapter.height(20)),
         child: Column(
           children: [
             Row(
@@ -238,11 +246,17 @@ class AuthLoginView extends BaseView<AuthLoginController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgWrapper(svgPath: Assets.images.iconWechart, size: ScreenAdapter.height(40)),
+                SvgWrapper(
+                    svgPath: Assets.images.iconWechart,
+                    size: ScreenAdapter.height(40)),
                 Gap(ScreenAdapter.width(24)),
-                SvgWrapper(svgPath: Assets.images.iconQq, size: ScreenAdapter.height(40)),
+                SvgWrapper(
+                    svgPath: Assets.images.iconQq,
+                    size: ScreenAdapter.height(40)),
                 Gap(ScreenAdapter.width(24)),
-                SvgWrapper(svgPath: Assets.images.iconApple, size: ScreenAdapter.height(40)),
+                SvgWrapper(
+                    svgPath: Assets.images.iconApple,
+                    size: ScreenAdapter.height(40)),
               ],
             )
           ],

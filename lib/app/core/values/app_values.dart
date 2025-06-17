@@ -22,6 +22,9 @@ abstract class AppValues {
   /// API 区域设置的存储 key
   static const String apiRegionKey = "API_REGION";
 
+  /// 用户信息存储 key
+  static const String userInfoKey = "USER_INFO";
+
   /// 日志配置相关常量
   /// 
   /// 用于配置日志打印的格式和内容
@@ -53,4 +56,8 @@ abstract class AppValues {
   /// 用于定义基础UI元素的尺寸
   static const double smallRadius = 8;           /// 小圆角半径
   static const double radius = 16;               /// 对话框圆角半径
+
+  /// 令牌相关常量
+  static const String accessToken = "ACCESS_TOKEN";
+  static const String refreshToken = "REFRESH_TOKEN";
 }

@@ -1,6 +1,6 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter_template_getx/app/core/service/storage_service.dart';
+import 'package:flutter_template_getx/app/core/values/app_values.dart';
 import 'package:logger/logger.dart';
 
 class RequestHeaderInterceptor extends InterceptorsWrapper {
@@ -15,26 +15,26 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
   }
 
   Future<Map<String, String>> getCustomHeaders() async {
-    // var bearer = await storage.getData(AppValues.idToken);
-    // Logger().d("Complete Token: ${bearer.toString()}");
+    var accessToken = storage.getString(AppValues.accessToken);
+    var refreshToken = storage.getString(AppValues.refreshToken);
+    Logger().d("Complete Token: ${accessToken}");
 
-    // Logger().d("message:${bearer}");
-    
+    Logger().d("message:${refreshToken}");
+
     var customHeaders;
-    // if (bearer != null) {
-    //   customHeaders = {
-    //     // 'content-type': 'application/json',
-    //     'Authorization': 'Bearer ${bearer}',
-    //     'Accept': '*/*',
-    //   };
-      
-    // } else {
-    //   customHeaders = {
-    //     // 'content-type': 'application/json',
-    //     // 'Authorization': 'Bearer ${bearer}',
-    //     'Accept': '*/*',
-    //   };
-    // }
+    if (accessToken != null) {
+      customHeaders = {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ${accessToken}',
+        'Accept': '*/*',
+      };
+    } else {
+      customHeaders = {
+        'content-type': 'application/json',
+        // 'Authorization': 'Bearer ${accessToken}',
+        'Accept': '*/*',
+      };
+    }
 
     return customHeaders;
   }

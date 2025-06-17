@@ -1,18 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_template_getx/app/core/base/repository/base_repository.dart';
+import 'package:flutter_template_getx/app/core/values/app_values.dart';
+import 'package:flutter_template_getx/app/modules/user/models/user_info.dart';
 import 'package:flutter_template_getx/app/network/dio_provider.dart';
 import '../api.dart';
 import 'account_repository.dart';
 
 /// 账号相关仓储实现类
-/// 
+///
 /// 实现账号相关的所有接口方法
-class AccountRepositoryImpl extends BaseRepository implements AccountRepository {
+class AccountRepositoryImpl extends BaseRepository
+    implements AccountRepository {
   /// 用户登录
   @override
-  Future<Response> login(String username, String password) {
+  Future<bool> login(
+      {required String username, required String password}) async {
     var uri = DioProvider.baseUrl + Api.loginApi;
-    return callApiWithErrorParser(
+    var response = await callApiWithErrorParser(
       dioClient.post(
         uri,
         data: {
@@ -21,6 +25,16 @@ class AccountRepositoryImpl extends BaseRepository implements AccountRepository 
         },
       ),
     );
+
+    if (response.statusCode == 200) {
+      // 存储 token
+      storage.setString(AppValues.accessToken, response.data['data']['access']);
+      storage.setString(AppValues.refreshToken, response.data['data']['refresh']);
+
+      return true;
+    }
+
+    return false;
   }
 
   /// 获取用户列表
@@ -34,23 +48,30 @@ class AccountRepositoryImpl extends BaseRepository implements AccountRepository 
 
   /// 创建用户
   @override
-  Future<Response> createUser(Map<String, dynamic> userData) {
+  Future<UserInfo> createUser(
+      {required String password, required String email}) async {
     var uri = DioProvider.baseUrl + Api.createUserApi;
-    return callApiWithErrorParser(
+    var response = await callApiWithErrorParser(
       dioClient.post(
         uri,
-        data: userData,
+        data: {
+          'username': email,
+          'password': password,
+          'email': email,
+        },
       ),
     );
+    return UserInfo.fromJson(response.data);
   }
 
   /// 获取当前用户信息
   @override
-  Future<Response> getUserInfo() {
+  Future<UserInfo> getUserInfo() async {
     var uri = DioProvider.baseUrl + Api.infoApi;
-    return callApiWithErrorParser(
+    var response = await callApiWithErrorParser(
       dioClient.get(uri),
     );
+    return UserInfo.fromJson(response.data['data']);
   }
 
   /// 上传用户头像

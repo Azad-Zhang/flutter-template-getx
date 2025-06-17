@@ -24,7 +24,7 @@ abstract class T {
   static const String memoryString = 'memoryString';    /// 内存字符串
   static const String setMemoryString = 'setMemoryString';  /// 设置内存字符串
 
-  /// 权限相关翻译键
+  /// 权限相关翻译键  
   /// 
   /// 包含权限相关的文本内容
   static const String permissionRequest = 'permissionRequest';
@@ -56,6 +56,7 @@ abstract class T {
   static const String register = 'register';
   static const String registerPrompt = 'registerPrompt';
   static const String pleaseInputConfirmPassword = 'pleaseInputConfirmPassword';
+  static const String toLogin = 'toLogin';
 
   /// 协议相关翻译键
   static const String protocol = 'protocol';

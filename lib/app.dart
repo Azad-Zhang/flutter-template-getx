@@ -43,12 +43,15 @@ import 'package:flutter_template_getx/app/core/controllers/language_controller.d
 /// 4. 国际化配置
 /// 5. 页面转场动画配置
 class App extends StatelessWidget {
+  final String initialRoute;
+
   /// 构造函数
-  const App({Key? key}) : super(key: key);
+    App({Key? key, required this.initialRoute}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final languageController = Get.find<LanguageController>();
+    print("initialRoute: $initialRoute");
     
     return ScreenUtilInit(
       // 设计稿尺寸，用于屏幕适配
@@ -64,7 +67,7 @@ class App extends StatelessWidget {
           // 是否显示调试标签
           debugShowCheckedModeBanner: false,
           // 初始路由
-          initialRoute: AppPages.INITIAL,
+          initialRoute: initialRoute,
           // 初始绑定
           initialBinding: InitialBinding(),
           // 默认页面转场动画

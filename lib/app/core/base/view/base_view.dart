@@ -11,18 +11,23 @@ import 'package:flutter/services.dart';
 import 'package:flutter_template_getx/app/core/base/controller/base_controller.dart';
 import 'package:flutter_template_getx/app/core/model/page_background.dart';
 import 'package:flutter_template_getx/app/core/model/page_state.dart';
+import 'package:flutter_template_getx/app/core/utils/logger_singleton.dart';
 import 'package:flutter_template_getx/app/core/utils/screen_adapter.dart';
 import 'package:flutter_template_getx/app/core/values/app_colors.dart';
 import 'package:flutter_template_getx/app/core/values/app_values.dart';
 import 'package:flutter_template_getx/app/core/widgets/custom_appbar.dart';
 import 'package:flutter_template_getx/app/core/widgets/elevated_container.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 /// 基础视图类
 /// 提供统一的页面布局和状态管理
 /// 包括：加载状态、错误提示、成功提示、默认消息等
 abstract class BaseView<Controller extends BaseController>
     extends GetView<Controller> {
+  /// 日志服务实例
+  final Logger logger = LoggerSingleton.getInstance();
+
   /// 背景颜色
   final Color bgColor;
 

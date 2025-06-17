@@ -58,9 +58,10 @@ class AppTranslations extends Translations {
           T.toRegister: '使用账号密码注册',
 
           // 注册 
-          T.register: '注册',
-          T.registerPrompt: '请输入注册信息',
+          T.register: '账号密码注册',
+          T.registerPrompt: '未注册的账号注册后将自动登录',
           T.pleaseInputConfirmPassword: '请输入确认密码',
+          T.toLogin: '使用账号密码登录',
 
           // 协议
           T.protocol: '协议',
@@ -125,7 +126,7 @@ class AppTranslations extends Translations {
           T.register: 'Register',
           T.registerPrompt: 'Please input register information',
           T.pleaseInputConfirmPassword: 'Please input confirm password',
-
+          T.toLogin: 'Login with Account',
           // Protocol
           T.protocol: 'Protocol',
           T.protocolContent: 'Protocol Content',

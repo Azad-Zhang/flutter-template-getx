@@ -285,6 +285,26 @@ class HomeView extends BaseView<HomeController> {
               ),
             ),
             SizedBox(height: AppValues.margin_40),
+
+            // 退出登录按钮
+            InkWell(
+              onTap: () => controller.logout(),
+              child: Container(
+                padding: EdgeInsets.all(AppValues.margin),
+                decoration: BoxDecoration(
+                  color: Colors.red.withAlpha(230),
+                  borderRadius: BorderRadius.circular(AppValues.smallRadius),
+                ),
+                child: Text(
+                  '退出登录',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: AppValues.margin_40),
           ],
         ),
       ),

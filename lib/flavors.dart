@@ -145,6 +145,6 @@ class F {
   static Future<void> setApiRegion(ApiRegion region) async {
     final storage = SecureStorageService.instance;
     // 将枚举值转换为整数存储
-    await storage.setInt(AppValues.apiRegionKey, region.index);
+    storage.setInt(AppValues.apiRegionKey, region.index);
   }
 }

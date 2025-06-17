@@ -11,6 +11,9 @@ import 'package:flutter_template_getx/app/core/service/storage_service.dart';
 import 'package:flutter_template_getx/app/core/values/app_values.dart';
 import 'package:get/get.dart';
 import 'package:mmkv/mmkv.dart';
+import 'package:flutter_template_getx/app/core/utils/toast_util.dart';
+import 'package:flutter_template_getx/app/routes/app_pages.dart';
+import 'package:flutter/material.dart';
 
 class HomeController extends BaseController {
   RxString storageString = "".obs;
@@ -39,11 +42,27 @@ class HomeController extends BaseController {
   }
 
   void testStorage() async {
-    await storage.setString(AppValues.testValue, "123");
+     storage.setString(AppValues.testValue, "123");
     final result = await storage.getString(AppValues.testValue);
     if (result != null)
       storageString.value = result;
     else
       logger.d("设置内存字符串出错");
+  }
+
+    /// 退出登录
+  Future<void> logout() async {
+    try {
+      // 清空存储
+       storage.deleteAll();
+      
+      // 显示退出成功提示
+      ToastUtil.showSuccess(Get.context!, '退出成功');
+      
+      // 跳转到登录页
+      Get.offAllNamed(Routes.AUTH_LOGIN);
+    } catch (e) {
+      Get.snackbar('错误', '退出失败：$e', backgroundColor: Colors.red);
+    }
   }
 }
